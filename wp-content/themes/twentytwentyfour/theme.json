@@ -527,7 +527,7 @@
 					"link": {
 						":hover": {
 							"typography": {
-								"textDecoration": "underline"
+								"textDecoration": "none"
 							}
 						},
 						"typography": {
@@ -951,6 +951,11 @@
 			"name": "single-with-sidebar",
 			"postTypes": ["post"],
 			"title": "Single with Sidebar"
+		},
+		{
+			"name": "page-wide-products",
+			"postTypes": ["page"],
+			"title": "Page with Wide Image for products"
 		}
 	]
 }

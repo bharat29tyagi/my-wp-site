@@ -216,45 +216,42 @@ if (! function_exists('custom_breadcrumbs')) :
 	 * @since Twenty Twenty-Four 1.0
 	 * @return void
 	 */
-	function custom_breadcrumbs()
-	{
-		// Settings for the breadcrumbs
-		$separator = '&gt;';  // Using HTML entity for ">"
-		$home_title = 'Home';   // Title for the home link
-
-		// Show home link
-		echo '<a href="' . home_url() .'">' . $home_title . '</a>';
-
-		// If not the homepage, show the current page's hierarchy
-		if (!is_front_page()) {
-			echo '' . $separator . '';
-
-			// For single posts and pages
-			if (is_single()) {
+	function custom_breadcrumbs() {
+		$separator = ' &gt; '; 
+		$home_title = 'Home';   
+		echo '<div class="breadcrumb">';
+		echo '<a href="' . home_url() . '">' . $home_title . '</a>';
+	
+		if ( !is_front_page() ) {
+			echo ' ' . $separator . ' ';
+			if ( is_single() ) {
 				$categories = get_the_category();
-				if (!empty($categories)) {
+				if ( !empty($categories) ) {
 					$category = $categories[0];
 					echo '<a href="' . get_category_link($category->term_id) . '">' . $category->name . '</a>';
 					echo ' ' . $separator . ' ';
 				}
-				the_title();
+				// Wrap the page title in a span with class "title-page"
+				echo '<span class="title-page">' . get_the_title() . '</span>';
 			}
-			// For pages
-			elseif (is_page()) {
+			elseif ( is_page() ) {
 				global $post;
 				if ($post->post_parent) {
-					$ancestors = get_post_ancestors($post->ID);
-					foreach (array_reverse($ancestors) as $ancestor) {
+					$ancestors = get_post_ancestors( $post->ID );
+					foreach ( array_reverse($ancestors) as $ancestor ) {
 						echo '<a href="' . get_permalink($ancestor) . '">' . get_the_title($ancestor) . '</a>';
 						echo ' ' . $separator . ' ';
 					}
 				}
-				the_title();
+				// Wrap the page title in a span with class "title-page"
+				echo '<span class="title-page">' . get_the_title() . '</span>';
 			}
-			// For custom post types
-			elseif (is_singular()) {
-				the_title();
+			elseif ( is_singular() ) {
+				// For custom post types
+				echo '<span class="title-page">' . get_the_title() . '</span>';
 			}
 		}
+		echo '</div>';
 	}
+		
 endif;
